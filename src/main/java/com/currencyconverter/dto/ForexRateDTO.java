@@ -11,6 +11,5 @@ public class ForexRateDTO {
     
     private String referenceCurrencyCode;
     private String targetCurrencyCode;
-    private BigDecimal exchangeRate;
     private BigDecimal convertedAmount;
 }

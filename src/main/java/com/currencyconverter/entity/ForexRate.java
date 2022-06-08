@@ -2,7 +2,6 @@ package com.currencyconverter.entity;
 
 import com.currencyconverter.constant.QuotationType;
 import lombok.Data;
-import org.springframework.stereotype.Indexed;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

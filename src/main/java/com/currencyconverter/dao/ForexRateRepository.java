@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ForexRateRepository extends CrudRepository<ForexRate, Long> {
-    
     ForexRate findByTargetCurrencyCode(String targetCurrencyCode);
 }

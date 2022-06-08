@@ -24,10 +24,10 @@ public class CurrencyConverterController {
         this.currencyConverterService = currencyConverterService;
     }
     
-    @GetMapping("/convert")
+    @GetMapping("/conversion")
     public ForexRateDTO convert(@RequestParam("from") String sourceCurrencyCode,
                                 @RequestParam("to") String targetCurrencyCode,
-                                @RequestParam("amount")BigDecimal amount) {
+                                @RequestParam("amount") BigDecimal amount) {
         return currencyConverterService.convert(sourceCurrencyCode, targetCurrencyCode, amount);
     }
 }
