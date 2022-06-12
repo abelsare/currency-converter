@@ -1,15 +1,16 @@
 package com.currencyconverter.dto;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Builder
-@Getter
+@Data
 public class ForexRateDTO {
     
     private String referenceCurrencyCode;
     private String targetCurrencyCode;
     private BigDecimal convertedAmount;
+    
 }

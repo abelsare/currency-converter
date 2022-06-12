@@ -55,7 +55,7 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
                 // Find the source currency rate and divide the amount with it
                 ForexRate sourceRate = forexRateRepository.findByTargetCurrencyCode(sourceCurrencyCode);
                 throwExceptionIfNull(sourceRate, sourceCurrencyCode);
-                convertedAmount = amount.divide(sourceRate.getExchangeRate(), RoundingMode.HALF_UP);
+                convertedAmount = amount.divide(sourceRate.getExchangeRate(), 2, RoundingMode.HALF_UP);
             } else {
                 // Perform triangulation as none of the currencies are reference currency
                 convertedAmount = triangulate(sourceCurrencyCode, targetCurrencyCode, amount);
@@ -69,14 +69,14 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
         ForexRate targetRate = forexRateRepository.findByTargetCurrencyCode(targetCurrencyCode);
         throwExceptionIfNull(sourceRate, sourceCurrencyCode);
         throwExceptionIfNull(targetRate, targetCurrencyCode);
-        BigDecimal convertedAmount = amount.divide(sourceRate.getExchangeRate(), RoundingMode.HALF_UP);
+        BigDecimal convertedAmount = amount.divide(sourceRate.getExchangeRate(), 2, RoundingMode.HALF_UP);
         return convertedAmount.multiply(targetRate.getExchangeRate());
     }
     
     private void throwExceptionIfNull(ForexRate forexRate, String currencyCode) {
         if(Objects.isNull(forexRate)) {
             throw new ExchangeRateNotFoundException(
-                    "Could not covert as exchange rate for code : " + currencyCode + " not found.");
+                    "Could not convert as exchange rate for code : " + currencyCode + " not found.");
         }
     }
     
