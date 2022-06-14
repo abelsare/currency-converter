@@ -1,6 +1,7 @@
 package com.currencyconverter.entity;
 
 import com.currencyconverter.constant.QuotationType;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
  */
 @Data
 @Entity
+@Builder
 @Table(indexes = @Index(columnList = "targetCurrencyCode"))
 public class ForexRate {
     

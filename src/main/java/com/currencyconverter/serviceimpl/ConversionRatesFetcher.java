@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -34,9 +32,9 @@ public class ConversionRatesFetcher {
     
     @EventListener(ApplicationReadyEvent.class)
     public void downloadLatestExchangeRates() throws ParserConfigurationException, IOException, SAXException {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        Document document = db.parse(new URL(exchangeRateUrl).openStream());
+        var dbf = DocumentBuilderFactory.newInstance();
+        var db = dbf.newDocumentBuilder();
+        var document = db.parse(new URL(exchangeRateUrl).openStream());
         exchangeRateParserService.parseAndPersistExchangeRates(document);
     }
 }

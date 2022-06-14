@@ -30,7 +30,7 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "All query parameters required");
         }
         
-        BigDecimal convertedAmount = calculateAmount(sourceCurrencyCode, targetCurrencyCode, amount);
+        var convertedAmount = calculateAmount(sourceCurrencyCode, targetCurrencyCode, amount);
         
         return ForexRateDTO.builder()
                 .convertedAmount(convertedAmount)
@@ -48,12 +48,12 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
         } else {
             if(sourceCurrencyCode.equals("EUR")) {
                 // Find the target currency rate and multiply with the amount
-                ForexRate targetRate = forexRateRepository.findByTargetCurrencyCode(targetCurrencyCode);
+                var targetRate = forexRateRepository.findByTargetCurrencyCode(targetCurrencyCode);
                 throwExceptionIfNull(targetRate, targetCurrencyCode);
                 convertedAmount = amount.multiply(targetRate.getExchangeRate());
             } else if(targetCurrencyCode.equals("EUR")) {
                 // Find the source currency rate and divide the amount with it
-                ForexRate sourceRate = forexRateRepository.findByTargetCurrencyCode(sourceCurrencyCode);
+                var sourceRate = forexRateRepository.findByTargetCurrencyCode(sourceCurrencyCode);
                 throwExceptionIfNull(sourceRate, sourceCurrencyCode);
                 convertedAmount = amount.divide(sourceRate.getExchangeRate(), 2, RoundingMode.HALF_UP);
             } else {
@@ -65,11 +65,11 @@ public class CurrencyConverterServiceImpl implements CurrencyConverterService {
     }
     
     private BigDecimal triangulate(String sourceCurrencyCode, String targetCurrencyCode, BigDecimal amount) {
-        ForexRate sourceRate = forexRateRepository.findByTargetCurrencyCode(sourceCurrencyCode);
-        ForexRate targetRate = forexRateRepository.findByTargetCurrencyCode(targetCurrencyCode);
+        var sourceRate = forexRateRepository.findByTargetCurrencyCode(sourceCurrencyCode);
+        var targetRate = forexRateRepository.findByTargetCurrencyCode(targetCurrencyCode);
         throwExceptionIfNull(sourceRate, sourceCurrencyCode);
         throwExceptionIfNull(targetRate, targetCurrencyCode);
-        BigDecimal convertedAmount = amount.divide(sourceRate.getExchangeRate(), 2, RoundingMode.HALF_UP);
+        var convertedAmount = amount.divide(sourceRate.getExchangeRate(), 2, RoundingMode.HALF_UP);
         return convertedAmount.multiply(targetRate.getExchangeRate());
     }
     
